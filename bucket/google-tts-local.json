@@ -5,8 +5,8 @@
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/aaditya-v-more/google-tts-local/releases/download/v0.4.0/google-tts-local-0.4.0-windows-x64.zip",
-            "hash": "2ba9df5ca4c8f1f7d178bc2da6fdeeaa1976bb5598a725a3289ae9bf2f661f18",
+            "url": "https://github.com/aaditya-v-more/google-tts-local/releases/download/v0.4.0-windows/google-tts-local-0.4.0-windows-x64.zip",
+            "hash": "589c4864dcffd3871c1ff37e408bf71f364c16c8079b3baabc48d97226260896",
             "extract_dir": "google-tts-local-0.4.0-windows-x64"
         }
     },
@@ -27,11 +27,14 @@
         "  gtts service install",
         "The server listens on 127.0.0.1:5591. Downloaded voices are kept in %LOCALAPPDATA%\\google-tts-local."
     ],
-    "checkver": "github",
+    "checkver": {
+        "url": "https://api.github.com/repos/aaditya-v-more/google-tts-local/releases",
+        "regex": "\"tag_name\":\\s*\"v([\\d.]+)-windows\""
+    },
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/aaditya-v-more/google-tts-local/releases/download/v$version/google-tts-local-$version-windows-x64.zip",
+                "url": "https://github.com/aaditya-v-more/google-tts-local/releases/download/v$version-windows/google-tts-local-$version-windows-x64.zip",
                 "extract_dir": "google-tts-local-$version-windows-x64"
             }
         },
