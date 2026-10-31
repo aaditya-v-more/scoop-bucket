@@ -12,20 +12,17 @@
     },
     "bin": "gtts.exe",
     "pre_uninstall": [
-        "# The background server holds gttsw.exe open; stop it so the old version can be removed.",
-        "if ($cmd -eq 'uninstall') { & \"$dir\\gtts.exe\" service uninstall }",
-        "else { Get-Process gttsw -ErrorAction SilentlyContinue | Where-Object { $_.Path -like \"$(appsdir $global)\\$app\\*\" } | Stop-Process -Force }"
-    ],
-    "post_install": [
-        "# Point the sign-in entry at the 'current' folder so it survives updates, and restart it.",
-        "$run = Get-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -Name 'google-tts-local' -ErrorAction SilentlyContinue",
-        "if ($run) { & \"$(appdir $app $global)\\current\\gtts.exe\" service install }"
+        "if ($cmd -eq 'uninstall') { & \"$dir\\gtts.exe\" service uninstall }"
     ],
     "notes": [
         "Download the engine and voice packs (from Google's ChromeOS mirror), then start the HTTP server at sign-in:",
         "  gtts fetch",
         "  gtts service install",
-        "The server listens on 127.0.0.1:5591. Downloaded voices are kept in %LOCALAPPDATA%\\google-tts-local."
+        "The server listens on 127.0.0.1:5591. Downloaded voices are kept in %LOCALAPPDATA%\\google-tts-local.",
+        "Scoop can't update or uninstall it while the server runs. Stop it first, then start it again after updating:",
+        "  gtts service uninstall",
+        "  scoop update google-tts-local",
+        "  gtts service install"
     ],
     "checkver": {
         "url": "https://api.github.com/repos/aaditya-v-more/google-tts-local/releases",
