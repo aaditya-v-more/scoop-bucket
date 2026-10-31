@@ -1,26 +1,24 @@
 {
-    "version": "0.4.0",
+    "version": "0.4.1",
     "description": "Run Google's on-device text-to-speech voices locally, with a command line and an HTTP server.",
     "homepage": "https://github.com/aaditya-v-more/google-tts-local",
     "license": "MIT",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/aaditya-v-more/google-tts-local/releases/download/v0.4.0-windows/google-tts-local-0.4.0-windows-x64.zip",
-            "hash": "589c4864dcffd3871c1ff37e408bf71f364c16c8079b3baabc48d97226260896",
-            "extract_dir": "google-tts-local-0.4.0-windows-x64"
+            "url": "https://github.com/aaditya-v-more/google-tts-local/releases/download/v0.4.1-windows/google-tts-local-0.4.1-windows-x64.zip",
+            "hash": "0fe50f9ffd00de92e00a0571d8a069cb18ed3c1b55d745685cc76521a62d4472",
+            "extract_dir": "google-tts-local-0.4.1-windows-x64"
         }
     },
     "bin": "gtts.exe",
-    "pre_uninstall": [
-        "if ($cmd -eq 'uninstall') { & \"$dir\\gtts.exe\" service uninstall }"
-    ],
+    "pre_uninstall": "if ($cmd -eq 'uninstall') { & \"$dir\\gtts.exe\" service uninstall }",
     "notes": [
         "Download the engine and voice packs (from Google's ChromeOS mirror), then start the HTTP server at sign-in:",
         "  gtts fetch",
         "  gtts service install",
         "The server listens on 127.0.0.1:5591. Downloaded voices are kept in %LOCALAPPDATA%\\google-tts-local.",
         "Scoop can't update or uninstall it while the server runs. Stop it first, then start it again after updating:",
-        "  gtts service uninstall; Stop-Process -Name gttsw, gtts -ErrorAction SilentlyContinue",
+        "  gtts service uninstall",
         "  scoop update google-tts-local",
         "  gtts service install"
     ],
