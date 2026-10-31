@@ -1,0 +1,42 @@
+{
+    "version": "0.4.0",
+    "description": "Run Google's on-device text-to-speech voices locally, with a command line and an HTTP server.",
+    "homepage": "https://github.com/aaditya-v-more/google-tts-local",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/aaditya-v-more/google-tts-local/releases/download/v0.4.0/google-tts-local-0.4.0-windows-x64.zip",
+            "hash": "2ba9df5ca4c8f1f7d178bc2da6fdeeaa1976bb5598a725a3289ae9bf2f661f18",
+            "extract_dir": "google-tts-local-0.4.0-windows-x64"
+        }
+    },
+    "bin": "gtts.exe",
+    "pre_uninstall": [
+        "# The background server holds gttsw.exe open; stop it so the old version can be removed.",
+        "if ($cmd -eq 'uninstall') { & \"$dir\\gtts.exe\" service uninstall }",
+        "else { Get-Process gttsw -ErrorAction SilentlyContinue | Where-Object { $_.Path -like \"$(appsdir $global)\\$app\\*\" } | Stop-Process -Force }"
+    ],
+    "post_install": [
+        "# Point the sign-in entry at the 'current' folder so it survives updates, and restart it.",
+        "$run = Get-ItemProperty 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' -Name 'google-tts-local' -ErrorAction SilentlyContinue",
+        "if ($run) { & \"$(appdir $app $global)\\current\\gtts.exe\" service install }"
+    ],
+    "notes": [
+        "Download the engine and voice packs (from Google's ChromeOS mirror), then start the HTTP server at sign-in:",
+        "  gtts fetch",
+        "  gtts service install",
+        "The server listens on 127.0.0.1:5591. Downloaded voices are kept in %LOCALAPPDATA%\\google-tts-local."
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/aaditya-v-more/google-tts-local/releases/download/v$version/google-tts-local-$version-windows-x64.zip",
+                "extract_dir": "google-tts-local-$version-windows-x64"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/SHA256SUMS"
+        }
+    }
+}
