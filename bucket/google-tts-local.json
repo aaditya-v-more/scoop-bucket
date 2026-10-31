@@ -20,7 +20,7 @@
         "  gtts service install",
         "The server listens on 127.0.0.1:5591. Downloaded voices are kept in %LOCALAPPDATA%\\google-tts-local.",
         "Scoop can't update or uninstall it while the server runs. Stop it first, then start it again after updating:",
-        "  gtts service uninstall",
+        "  gtts service uninstall; Stop-Process -Name gttsw, gtts -ErrorAction SilentlyContinue",
         "  scoop update google-tts-local",
         "  gtts service install"
     ],
